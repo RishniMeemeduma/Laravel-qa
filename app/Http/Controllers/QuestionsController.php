@@ -13,6 +13,10 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth',['except'=>['index','show']]);
+    }
+
     public function index()
     {
         $questions = Question::with('user')->latest()->paginate(10);
@@ -64,7 +68,13 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
+        // if(\Gate::denies('update-question',$question)){
+        //     abort('403','Access Denied !!');
+        // }
+        $this->authorize('update',$question);
         return view('Questions.edit',compact('question'));
+
+       
     }
 
     /**
@@ -76,6 +86,10 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
+        // if(\Gate::denies('update-question',$question)){
+        //     abort(403,'Access Denied !!');
+        // }
+        $this->authorize('update',$question);
         $question->update($request->all());
 
         return redirect()->route('questions.index')->with('success','Your question has been updated');
@@ -89,6 +103,11 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+
+        // if(\Gate::denies('delete-question',$question)){
+        //     abort(403,'Access Denied !!');
+        // }
+        $this->authorize('delete',$question);
         $question->delete();
 
         return redirect()->route('questions.index')->with('success','Your Question has been deleted.');
