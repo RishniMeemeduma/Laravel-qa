@@ -40,9 +40,9 @@ class Answer extends Model
 
         static::deleted(function($answer){
             $answer->question->decrement('answers_count');
-            if($answer->question->best_answer_id== $answer->id){
-                $answer->question->best_answer_id=null;
-            }
+            // if($answer->question->best_answer_id== $answer->id){
+            //     $answer->question->best_answer_id=null;
+            // }
             $answer->question->save();
         });
 
