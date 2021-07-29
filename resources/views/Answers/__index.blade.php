@@ -20,7 +20,7 @@
                         <a title="This answer is not usable" class="vote-down off" >
                             <i class="fas fa-caret-down fa-3x"></i>
                         </a>
-                        <a title="Mark this answer as bast answer" class="vote-accepted mt-2 ">
+                        <a title="Mark this answer as bast answer" class="{{ $answer->status }} mt-2 ">
                             <i class="fas fa-check fa-2x"></i>
                         </a>
                     </div>
