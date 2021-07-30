@@ -29,3 +29,7 @@ Route::get('/questions/{slug}','App\Http\Controllers\QuestionsController@show')-
 Route::resource('questions.answers','App\Http\Controllers\AnswersController')->except(['index','create','show']);
 
 Route::post('answers/{answer}/accept','App\Http\Controllers\AcceptAnswerController')->name('answers.accept');
+
+Route::post('questions/{question}/favourites','App\Http\Controllers\FavouriteController@store')->name('questions.favourites');
+
+Route::delete('questions/{question}/favourites','App\Http\Controllers\FavouriteController@destroy')->name('questions.unfavourite');
