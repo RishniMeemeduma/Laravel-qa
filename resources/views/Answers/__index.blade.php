@@ -13,13 +13,23 @@
                 @foreach($answers as $answer)
                 <div class="media">
                     <div class="d-flex flex-column vote-controls">
-                        <a title="This answer is useful" class="vote-up">
+                        <a title="This answer is useful" class="vote-up {{ Auth::guest()?'off':''}}"
+                        onclick="event.preventDefault();document.getElementById('answer-vote-up-{{ $answer->id }}').submit()">
                             <i class="fas fa-caret-up fa-3x"></i>
                         </a>
-                        <span class="votes-count">5</span>
-                        <a title="This answer is not usable" class="vote-down off" >
+                        <span class="votes-count">{{$answer->votes_count}}</span>
+                        <a title="This answer is not usable" class="vote-down off {{ Auth::guest()?'off':''}}"
+                        onclick="event.preventDefault();document.getElementById('answer-vote-down-{{ $answer->id }}').submit()" >
                             <i class="fas fa-caret-down fa-3x"></i>
                         </a>
+                        <form action="{{ route('answers.vote',$answer->id)}}" method="POST" id="answer-vote-up-{{ $answer->id }}">
+                            @csrf
+                            <input type="hidden" name="vote" value="1" >
+                        </form>
+                        <form action="{{ route('answers.vote',$answer->id)}}" method="POST" id="answer-vote-down-{{ $answer->id }}">
+                            @csrf
+                            <input type="hidden" name="vote" value="-1" >
+                        </form>
                         @can('accept',$answer)
                         <a title="Mark this answer as bast answer" 
                         class="{{ $answer->status }} mt-2 "

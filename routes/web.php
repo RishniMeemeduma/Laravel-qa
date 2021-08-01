@@ -33,3 +33,7 @@ Route::post('answers/{answer}/accept','App\Http\Controllers\AcceptAnswerControll
 Route::post('questions/{question}/favourites','App\Http\Controllers\FavouriteController@store')->name('questions.favourites');
 
 Route::delete('questions/{question}/favourites','App\Http\Controllers\FavouriteController@destroy')->name('questions.unfavourite');
+
+Route::post('questions/{question}/vote','App\Http\Controllers\VoteQuestionController')->name('questions.vote');
+
+Route::post('answers/{answer}/vote','App\Http\Controllers\VoteAnswerController')->name('answers.vote');
