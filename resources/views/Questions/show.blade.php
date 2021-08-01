@@ -19,11 +19,13 @@
     
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a title="This question is useful" class="vote-up">
+                            <a title="This question is useful" class="vote-up {{ Auth::guest()?'off':''}}"
+                            onclick="event.preventDefault();document.getElementById('question-vote-up-{{$question->id}}').submit()">
                                 <i class="fas fa-caret-up fa-3x"></i>
                             </a>
-                            <span class="votes-count">5</span>
-                            <a title="This question is not usable" class="vote-down off" >
+                            <span class="votes-count">{{ $question->vote_count}}</span>
+                            <a title="This question is not usable" class="vote-down off {{ Auth::guest()?'off':''}}" 
+                            onclick="event.preventDefault();document.getElementById('question-vote-down-{{ $question->id }}').submit()">
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
                             <a title="Click to mark as favourite question(click again to undo)"
@@ -38,7 +40,16 @@
                                     @method('DELETE')
                                 @endif
 
-                                </form>
+                            </form>
+                            <form method="POST" action="{{ route('questions.vote',$question->id)}}" id="question-vote-up-{{$question->id}}">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+
+                            <form action="{{ route('questions.vote',$question->id) }}" method="POST" id="question-vote-down-{{ $question->id }}">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
                         </div>
                         <div class="media-body">
                             {!! $question->body_html !!}

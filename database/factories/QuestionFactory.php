@@ -27,7 +27,7 @@ class QuestionFactory extends Factory
             'body' =>$this->faker->paragraph(rand(1,5),true),
             'views' =>rand(0,5),
             // 'answers_count' =>rand(1,5),
-            'votes' => rand(-3,10)
+            // 'votes_count' => rand(-3,10)
         ];
     }
 }
