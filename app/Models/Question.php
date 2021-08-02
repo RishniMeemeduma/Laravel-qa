@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Question extends Model
 {
     use HasFactory;
+    use VotableTrait;
     protected $fillable = ['title','body'];
 
     public function user(){
@@ -83,8 +84,5 @@ class Question extends Model
       return $this->favourites->count();
     }
 
-    public function votes()
-    {
-      return $this->morphToMany(User::class,'votable');
-    }
+    
 }
