@@ -30,10 +30,10 @@ Route::resource('questions.answers','App\Http\Controllers\AnswersController')->e
 
 Route::post('answers/{answer}/accept','App\Http\Controllers\AcceptAnswerController')->name('answers.accept');
 
-Route::post('questions/{question}/favourites','App\Http\Controllers\FavouriteController@store')->name('questions.favourites');
+Route::post('/questions/{question}/favourites','App\Http\Controllers\FavouriteController@store');
 
-Route::delete('questions/{question}/favourites','App\Http\Controllers\FavouriteController@destroy')->name('questions.unfavourite');
+Route::delete('/questions/{question}/favourites','App\Http\Controllers\FavouriteController@destroy');
 
-Route::post('questions/{question}/vote','App\Http\Controllers\VoteQuestionController')->name('questions.vote');
+Route::post('/questions/{question}/vote','App\Http\Controllers\VoteQuestionController');
 
-Route::post('answers/{answer}/vote','App\Http\Controllers\VoteAnswerController')->name('answers.vote');
+Route::post('/answers/{answer}/vote','App\Http\Controllers\VoteAnswerController');
