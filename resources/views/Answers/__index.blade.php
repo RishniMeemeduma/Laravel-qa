@@ -17,7 +17,7 @@
                         onclick="event.preventDefault();document.getElementById('answer-vote-up-{{ $answer->id }}').submit()">
                             <i class="fas fa-caret-up fa-3x"></i>
                         </a>
-                        <span class="votes-count">{{$answer->votes_count}}</span>
+                        <span class="votes-count">{{$answer->vote_count}}</span>
                         <a title="This answer is not usable" class="vote-down off {{ Auth::guest()?'off':''}}"
                         onclick="event.preventDefault();document.getElementById('answer-vote-down-{{ $answer->id }}').submit()" >
                             <i class="fas fa-caret-down fa-3x"></i>

@@ -83,20 +83,7 @@ class User extends Authenticatable
     {
         $voteQuestions = $this->voteQuestions();
         
-        if($voteQuestions->where('votable_id',$question->id)->exists()){
-            $voteQuestions->updateExistingPivot($question->id,['likes'=>$vote]);
-        }else{
-            $voteQuestions->attach($question,['likes'=>$vote]);
-        }
-
-        $question->load('votes');
-       $down_votes = (int) $question->votes()->wherePivot('likes',-1)->sum('likes');
-
-       $up_votes = (int) $question->votes()->wherePivot('likes',1)->sum('likes');
-
-       $question->vote_count = $up_votes + $down_votes;
-       
-       $question->save();
+        $this->__vote($voteQuestions,$question,$vote);
        
     }
 
@@ -104,18 +91,27 @@ class User extends Authenticatable
     {
         $voteAnswer = $this->voteAnswers();
         
-        if($voteAnswer->where('votable_id',$answer->id)->exists()){
-            $voteAnswer->updateExistingPivot($answer->id,['likes'=>$vote]);
+        $this->__vote($voteAnswer,$answer,$vote);
+    }
+
+    private function __vote($relationship,$model,$vote)
+    {
+        if($relationship->where('votable_id',$model->id)->exists()){
+            $relationship->updateExistingPivot($model->id,['likes'=>$vote]);
         }else{
-            $voteAnswer->attach($answer,['likes'=>$vote]);
+            $relationship->attach($model,['likes'=>$vote]);
         }
 
-        $answer->load('votes');
-        $down_votes = (int) $answer->votes()->wherePivot('likes',-1)->sum('likes');
-        $up_votes = (int) $answer->votes()->wherePivot('likes',1)->sum('likes');
+        $model->load('votes');
+        $down_votes = (int) $model->voteUp()->sum('likes');
+        $up_votes = (int) $model->voteDown()->sum('likes');
 
-        $answer->votes_count = $up_votes + $down_votes;
-        $answer->save();
+        if($model == '$question'){
+            $model->vote_count =$up_votes + $down_votes;
+        }else{
+            $model->vote_count = $up_votes + $down_votes;
+        }
+        $model->save();
     }
 
 
