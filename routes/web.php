@@ -14,9 +14,7 @@ use App\Http\Controllers;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\QuestionsController@index');
 
 Auth::routes();
 

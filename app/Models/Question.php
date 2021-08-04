@@ -21,7 +21,7 @@ class Question extends Model
 
     public function answers(){
 
-      return $this->hasMany(Answer::class);
+      return $this->hasMany(Answer::class)->orderBy('vote_count','DESC');
 
     }
 
@@ -100,8 +100,8 @@ class Question extends Model
       return \Parsedown::instance()->text($this->body);
     }
 
-    public function setBodyAttribute($value)
-    {
-      // $this->attribute['body'] = clean($value);
-    }
+    // public function setBodyAttribute($value)
+    // {
+    //   // $this->attribute['body'] = clean($value);
+    // }
 }
