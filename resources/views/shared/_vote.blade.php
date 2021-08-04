@@ -24,7 +24,7 @@
         @include('shared._favourite',[
             'model'=>$model
         ])
-        @elseif($model instanceof App\Models\Answer)
+    @elseif($model instanceof App\Models\Answer)
         @include('shared.__accept',[
             'model'=>$model
         ])
